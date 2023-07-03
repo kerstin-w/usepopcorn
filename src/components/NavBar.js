@@ -5,14 +5,8 @@ import { useState } from "react";
  * number of results.
  * @returns The NavBar component is being returned.
  */
-export default function NavBar({ movies }) {
-  return (
-    <nav className="nav-bar">
-      <Logo />
-      <Search />
-      <NumResults movies={movies} />
-    </nav>
-  );
+export function NavBar({ children }) {
+  return <nav className="nav-bar">{children}</nav>;
 }
 
 /**
@@ -22,7 +16,7 @@ export default function NavBar({ movies }) {
  * there is a span element with the role "img" and the emoji "🍿", and an h1 element with the text
  * "usePopcorn".
  */
-function Logo() {
+export function Logo() {
   return (
     <div className="logo">
       <span role="img">🍿</span>
@@ -42,7 +36,7 @@ function Logo() {
  * - onChange: a function that updates the query state variable with the value of the input field when
  * it changes.
  */
-function Search() {
+export function Search() {
   const [query, setQuery] = useState("");
 
   return (
@@ -62,7 +56,7 @@ function Search() {
  * @returns a JSX element. Specifically, it is returning a paragraph element with a class name of
  * "num-results". Inside the paragraph, there is a strong element that will display the value of X.
  */
-function NumResults({ movies }) {
+export function NumResults({ movies }) {
   return (
     <p className="num-results">
       Found <strong>{movies.length}</strong> results

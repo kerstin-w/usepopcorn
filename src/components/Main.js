@@ -6,13 +6,8 @@ import { tempMovieData, tempWatchedData, average } from "../App";
  * @returns The Main component is returning a JSX element. The JSX element represents the main section
  * of the application and includes two child components, ListBox and WatchedBox.
  */
-export default function Main({ movies }) {
-  return (
-    <main className="main">
-      <ListBox movies={movies} />
-      <WatchedBox />
-    </main>
-  );
+export function Main({ children }) {
+  return <main className="main">{children}</main>;
 }
 
 /**
@@ -23,7 +18,7 @@ export default function Main({ movies }) {
  * that toggles the value of isOpen1 using the setIsOpen1 function. The text content of the button is
  * determined by the value of isOpen1 - if isOpen1 is true, the button displays "–
  */
-function ListBox({ movies }) {
+export function ListBox({ children }) {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -34,7 +29,7 @@ function ListBox({ movies }) {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-      {isOpen1 && <MovieList movies={movies} />}
+      {isOpen1 && children}
     </div>
   );
 }
@@ -46,7 +41,7 @@ function ListBox({ movies }) {
  * the array. The Movie component is passed the movie object as a prop and is given a unique key using
  * the movie's imdbID.
  */
-function MovieList({ movies }) {
+export function MovieList({ movies }) {
   return (
     <ul className="list">
       {movies?.map((movie) => (
@@ -84,7 +79,7 @@ function Movie({ movie }) {
  * there is a button with the class name "btn-toggle" that toggles the value of isOpen2 when clicked.
  * The button text is "-" when isOpen2 is true and "+" when isOpen2 is false.
  */
-function WatchedBox() {
+export function WatchedBox() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isOpen2, setIsOpen2] = useState(true);
 
