@@ -29,6 +29,12 @@ body {
   padding: 2.4rem;
 }
 
+.box::-webkit-scrollbar,
+.list::-webkit-scrollbar {
+  display: none;
+  scroll-behavior: smooth;
+}
+
 /* ******* */
 
 .nav-bar {
