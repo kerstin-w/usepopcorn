@@ -6,10 +6,10 @@ import { tempMovieData, tempWatchedData, average } from "../App";
  * @returns The Main component is returning a JSX element. The JSX element represents the main section
  * of the application and includes two child components, ListBox and WatchedBox.
  */
-export default function Main() {
+export default function Main({ movies }) {
   return (
     <main className="main">
-      <ListBox />
+      <ListBox movies={movies} />
       <WatchedBox />
     </main>
   );
@@ -23,7 +23,7 @@ export default function Main() {
  * that toggles the value of isOpen1 using the setIsOpen1 function. The text content of the button is
  * determined by the value of isOpen1 - if isOpen1 is true, the button displays "–
  */
-function ListBox() {
+function ListBox({ movies }) {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -34,7 +34,7 @@ function ListBox() {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-      {isOpen1 && <MovieList />}
+      {isOpen1 && <MovieList movies={movies} />}
     </div>
   );
 }
@@ -46,9 +46,7 @@ function ListBox() {
  * the array. The Movie component is passed the movie object as a prop and is given a unique key using
  * the movie's imdbID.
  */
-function MovieList() {
-  const [movies, setMovies] = useState(tempMovieData);
-
+function MovieList({ movies }) {
   return (
     <ul className="list">
       {movies?.map((movie) => (

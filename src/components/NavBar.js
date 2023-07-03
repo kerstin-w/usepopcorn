@@ -5,12 +5,12 @@ import { useState } from "react";
  * number of results.
  * @returns The NavBar component is being returned.
  */
-export default function NavBar() {
+export default function NavBar({ movies }) {
   return (
     <nav className="nav-bar">
       <Logo />
       <Search />
-      <NumResults />
+      <NumResults movies={movies} />
     </nav>
   );
 }
@@ -62,10 +62,10 @@ function Search() {
  * @returns a JSX element. Specifically, it is returning a paragraph element with a class name of
  * "num-results". Inside the paragraph, there is a strong element that will display the value of X.
  */
-function NumResults() {
+function NumResults({ movies }) {
   return (
     <p className="num-results">
-      Found <strong>X</strong> results
+      Found <strong>{movies.length}</strong> results
     </p>
   );
 }
