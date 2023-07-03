@@ -11,25 +11,22 @@ export function Main({ children }) {
 }
 
 /**
- * The ListBox function renders a box with a toggle button that controls the visibility of a MovieList
- * component.
- * @returns The ListBox component is returning a div element with the class name "box". Inside the div,
+ * The Box component is a toggleable container that displays its children when open and hides them when
+ * closed.
+ * @returns The Box component is returning a div element with the class name "box". Inside the div,
  * there is a button element with the class name "btn-toggle". The button has an onClick event handler
- * that toggles the value of isOpen1 using the setIsOpen1 function. The text content of the button is
- * determined by the value of isOpen1 - if isOpen1 is true, the button displays "–
+ * that toggles the isOpen state using the setIsOpen function. The text content of the button is
+ * determined by the isOpen state - if isOpen is true, the button displays "–" (minus sign), otherwise
  */
-export function ListBox({ children }) {
-  const [isOpen1, setIsOpen1] = useState(true);
+export function Box({ children }) {
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen1((open) => !open)}
-      >
-        {isOpen1 ? "–" : "+"}
+      <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
+        {isOpen ? "–" : "+"}
       </button>
-      {isOpen1 && children}
+      {isOpen && children}
     </div>
   );
 }
@@ -73,42 +70,13 @@ function Movie({ movie }) {
 }
 
 /**
- * The WatchedBox component renders a box that can be toggled open or closed, displaying a summary and
- * a list of watched movies.
- * @returns The WatchedBox component is returning a div with the class name "box". Inside the div,
- * there is a button with the class name "btn-toggle" that toggles the value of isOpen2 when clicked.
- * The button text is "-" when isOpen2 is true and "+" when isOpen2 is false.
- */
-export function WatchedBox() {
-  const [watched, setWatched] = useState(tempWatchedData);
-  const [isOpen2, setIsOpen2] = useState(true);
-
-  return (
-    <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen2((open) => !open)}
-      >
-        {isOpen2 ? "–" : "+"}
-      </button>
-      {isOpen2 && (
-        <>
-          <WatchedSummary watched={watched} />
-          <WatchedMovieList watched={watched} />
-        </>
-      )}
-    </div>
-  );
-}
-
-/**
  * The WatchedSummary function calculates and displays the average IMDb rating, user rating, and
  * runtime of a list of watched movies.
  * @returns The WatchedSummary component is returning a JSX element that displays a summary of movies
  * watched. The summary includes the number of movies watched, the average IMDb rating, the average
  * user rating, and the average runtime of the movies.
  */
-function WatchedSummary({ watched }) {
+export function WatchedSummary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
@@ -144,7 +112,7 @@ function WatchedSummary({ watched }) {
  * "list". Inside the ul, it is mapping over the "watched" array and rendering a WatchedMovie component
  * for each movie in the array. The key prop is set to the movie's imdbID.
  */
-function WatchedMovieList({ watched }) {
+export function WatchedMovieList({ watched }) {
   return (
     <ul className="list">
       {watched.map((movie) => (
