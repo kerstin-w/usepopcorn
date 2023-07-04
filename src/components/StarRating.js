@@ -11,6 +11,8 @@ const starContainerStyle = {
   display: "flex",
 };
 
+/* The code `StarRating.propTypes = {...}` is defining the prop types for the `StarRating` component.
+It specifies the expected types for each prop that the component accepts. */
 StarRating.propTypes = {
   maxRating: PropTypes.number,
   color: PropTypes.string,
@@ -20,6 +22,11 @@ StarRating.propTypes = {
   onSetRating: PropTypes.func,
 };
 
+/**
+ * The `StarRating` function is a React component that renders a star rating system with customizable
+ * options such as maximum rating, color, size, and message.
+ * @returns a React component.
+ */
 export default function StarRating({
   maxRating = 5,
   color = "#fcc419",
@@ -67,6 +74,14 @@ export default function StarRating({
   );
 }
 
+/**
+ * The `Star` function is a React component that renders a star icon, which can be full or empty, and
+ * allows for rating and hover interactions.
+ * @returns The Star component is returning a span element containing an SVG icon. The icon is either a
+ * filled star or an empty star, depending on the value of the "full" prop. The size and color of the
+ * star can be customized using the "size" and "color" props. The span element also has event handlers
+ * for onClick, onMouseEnter, and onMouseLeave, which are passed as props to
+ */
 function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
   const starStyle = {
     width: `${size}px`,
