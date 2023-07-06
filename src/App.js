@@ -8,6 +8,7 @@ import {
 } from "./components/Main";
 import { useEffect, useState } from "react";
 import { Loader } from "./components/Loader";
+import { ErrorMessage } from "./components/ErrorMessage";
 
 export const tempMovieData = [
   {
@@ -112,14 +113,5 @@ export default function App() {
         </Box>
       </Main>
     </>
-  );
-}
-
-function ErrorMessage({ message }) {
-  return (
-    <p className="error">
-      <span>⛔️</span>
-      {message}
-    </p>
   );
 }
