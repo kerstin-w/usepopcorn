@@ -6,7 +6,7 @@ import {
   WatchedSummary,
   WatchedMovieList,
 } from "./components/Main";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const tempMovieData = [
   {
@@ -58,9 +58,23 @@ export const tempWatchedData = [
 export const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
+const KEY = "3b0006a4";
+
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
+  const query = "Harry Potter";
+
+  useEffect(function () {
+    async function fetchMovies() {
+      const res = await fetch(
+        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+      );
+      const data = await res.json();
+      setMovies(data.Search);
+    }
+    fetchMovies();
+  }, []);
 
   return (
     <>
