@@ -36,9 +36,7 @@ export function Logo() {
  * - onChange: a function that updates the query state variable with the value of the input field when
  * it changes.
  */
-export function Search() {
-  const [query, setQuery] = useState("");
-
+export function Search({ query, setQuery }) {
   return (
     <input
       className="search"
