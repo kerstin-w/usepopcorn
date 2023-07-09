@@ -3,6 +3,6 @@
  * "loader".
  * @returns A paragraph element with the class name "loader" and the text "Loading...".
  */
-export function Loader() {
+export default function Loader() {
   return <p className="loader">Loading...</p>;
 }

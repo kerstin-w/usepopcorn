@@ -1,9 +1,9 @@
 import { NavBar, Logo, Search, NumResults } from "./components/NavBar";
 import { Main, Box } from "./components/Main";
-import { WatchedSummary, WatchedMovieList } from "./components/WatchedSummary";
+import { WatchedSummary, WatchedMovieList } from "./components/WatchedMovies";
 import { MovieList, MovieDetails } from "./components/Movies";
 import { useEffect, useState } from "react";
-import { Loader } from "./components/Loader";
+import Loader from "./components/Loader";
 import { ErrorMessage } from "./components/ErrorMessage";
 
 export const tempMovieData = [
@@ -56,7 +56,7 @@ export const tempWatchedData = [
 export const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const KEY = "3b0006a4";
+export const KEY = "3b0006a4";
 
 export default function App() {
   const [query, setQuery] = useState("");
