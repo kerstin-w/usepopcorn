@@ -1,12 +1,7 @@
 import { NavBar, Logo, Search, NumResults } from "./components/NavBar";
-import {
-  Main,
-  Box,
-  MovieList,
-  MovieDetails,
-  WatchedSummary,
-  WatchedMovieList,
-} from "./components/Main";
+import { Main, Box } from "./components/Main";
+import { WatchedSummary, WatchedMovieList } from "./components/WatchedSummary";
+import { MovieList, MovieDetails } from "./components/Movies";
 import { useEffect, useState } from "react";
 import { Loader } from "./components/Loader";
 import { ErrorMessage } from "./components/ErrorMessage";
