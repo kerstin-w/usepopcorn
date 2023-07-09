@@ -38,11 +38,11 @@ export function Box({ children }) {
  * the array. The Movie component is passed the movie object as a prop and is given a unique key using
  * the movie's imdbID.
  */
-export function MovieList({ movies }) {
+export function MovieList({ movies, onSelectMovie }) {
   return (
-    <ul className="list">
+    <ul className="list list-movies">
       {movies?.map((movie) => (
-        <Movie movie={movie} key={movie.imdbID} />
+        <Movie movie={movie} key={movie.imdbID} onSelectMovie={onSelectMovie} />
       ))}
     </ul>
   );
@@ -54,9 +54,9 @@ export function MovieList({ movies }) {
  * heading, and a paragraph. The image source is set to the movie's poster URL, the heading displays
  * the movie's title, and the paragraph displays the movie's year.
  */
-function Movie({ movie }) {
+function Movie({ movie, onSelectMovie }) {
   return (
-    <li key={movie.imdbID}>
+    <li key={movie.imdbID} onClick={() => onSelectMovie(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
@@ -66,6 +66,17 @@ function Movie({ movie }) {
         </p>
       </div>
     </li>
+  );
+}
+
+export function MovieDetails({ selectedId, onCloseMovie }) {
+  return (
+    <div className="detail">
+      <button className="btn-back" onClick={onCloseMovie}>
+        &larr;
+      </button>
+      {selectedId}
+    </div>
   );
 }
 
