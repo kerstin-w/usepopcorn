@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { tempMovieData, tempWatchedData } from "../App";
 
 /**
  * The Main function returns a JSX element containing a ListBox and a WatchedBox component.
