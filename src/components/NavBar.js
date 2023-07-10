@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 /**
  * The function exports a NavBar component that renders a navigation bar with a logo, search input, and
  * number of results.
@@ -35,6 +36,12 @@ export function Logo() {
  * it changes.
  */
 export function Search({ query, setQuery }) {
+  const inputEl = useRef(null);
+
+  useEffect(() => {
+    inputEl.current.focus();
+  }, []);
+
   return (
     <input
       className="search"
@@ -42,6 +49,7 @@ export function Search({ query, setQuery }) {
       placeholder="Search movies..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      ref={inputEl}
     />
   );
 }
