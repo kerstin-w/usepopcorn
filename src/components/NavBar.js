@@ -38,9 +38,22 @@ export function Logo() {
 export function Search({ query, setQuery }) {
   const inputEl = useRef(null);
 
-  useEffect(() => {
-    inputEl.current.focus();
-  }, []);
+  /* The `useEffect` hook in the code snippet is used to add an event listener to the document for the
+"keydown" event. */
+  useEffect(
+    function () {
+      function callback(e) {
+        if (document.activeElement === inputEl.current) return;
+        if (e.code === "Enter") {
+          inputEl.current.focus();
+          setQuery("");
+        }
+      }
+      document.addEventListener("keydown", callback);
+      return () => document.addEventListener("keydown", callback);
+    },
+    [setQuery]
+  );
 
   return (
     <input
