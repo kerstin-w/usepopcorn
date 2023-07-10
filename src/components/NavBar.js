@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 /**
  * The function exports a NavBar component that renders a navigation bar with a logo, search input, and
  * number of results.
@@ -49,10 +47,11 @@ export function Search({ query, setQuery }) {
 }
 
 /**
- * The NumResults function returns a paragraph element displaying the number of results found, with the
- * number represented by the placeholder "X".
- * @returns a JSX element. Specifically, it is returning a paragraph element with a class name of
- * "num-results". Inside the paragraph, there is a strong element that will display the value of X.
+ * The NumResults function returns a paragraph element displaying the number of results found based on
+ * the length of the movies array.
+ * @returns The NumResults component is returning a paragraph element with a className of
+ * "num-results". Inside the paragraph, it displays the number of movies found by accessing the length
+ * property of the movies array. The number is wrapped in a strong element for emphasis.
  */
 export function NumResults({ movies }) {
   return (
