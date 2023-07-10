@@ -11,6 +11,11 @@ export const average = (arr) =>
 
 export const KEY = "3b0006a4";
 
+/**
+ * The `App` function is a React component that handles the state and logic for searching and
+ * displaying movies, as well as managing a list of watched movies.
+ * @returns The function `App` is returning a JSX element.
+ */
 export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
@@ -19,22 +24,40 @@ export default function App() {
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
+  /**
+   * The function `handleSelectMovie` updates the selected movie ID based on the current selected ID.
+   * @param id - The `id` parameter is the unique identifier of the movie that is being selected.
+   */
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
   }
 
+  /**
+   * The function handleCloseMovie sets the selectedId variable to null.
+   */
   function handleCloseMovie() {
     setSelectedId(null);
   }
 
+  /**
+   * The function `handleAddWatch` adds a movie to the `watched` array.
+   * @param movie - The "movie" parameter is the movie object that you want to add to the "watched" list.
+   */
   function handleAddWatch(movie) {
     setWatched((watched) => [...watched, movie]);
   }
 
+  /**
+   * The function `handleDeleteWatched` removes a movie from the `watched` array based on its `imdbID`.
+   * @param id - The `id` parameter is the unique identifier of the movie that needs to be deleted from
+   * the `watched` array.
+   */
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
+  /* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
+`useEffect` hook is used to fetch movies from the OMDB API based on the `query` state variable. */
   useEffect(
     function () {
       const controller = new AbortController();
