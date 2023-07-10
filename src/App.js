@@ -19,10 +19,13 @@ export const KEY = "3b0006a4";
 export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+  const [watched, setWatched] = useState(function () {
+    const storedValue = localStorage.getItem("watched");
+    return JSON.parse(storedValue);
+  });
 
   /**
    * The function `handleSelectMovie` updates the selected movie ID based on the current selected ID.
@@ -55,6 +58,15 @@ export default function App() {
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
+
+  /* The `useEffect` hook is used to store the `watched` state variable in the browser's local storage
+whenever it changes. */
+  useEffect(
+    function () {
+      localStorage.setItem("watched", JSON.stringify(watched));
+    },
+    [watched]
+  );
 
   /* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
 `useEffect` hook is used to fetch movies from the OMDB API based on the `query` state variable. */
