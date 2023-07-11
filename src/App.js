@@ -4,12 +4,11 @@ import { WatchedSummary, WatchedMovieList } from "./components/WatchedMovies";
 import { MovieList, MovieDetails } from "./components/Movies";
 import Loader from "./components/Loader";
 import { ErrorMessage } from "./components/ErrorMessage";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useMovies } from "./components/useMovies";
 
 export const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
-
-export const KEY = "3b0006a4";
 
 /**
  * The `App` function is a React component that handles the state and logic for searching and
@@ -18,10 +17,10 @@ export const KEY = "3b0006a4";
  */
 export default function App() {
   const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+  const handleCloseMovie = useCallback(() => setSelectedId(null), []);
+  const { movies, isLoading, error } = useMovies(query, handleCloseMovie);
+
   const [watched, setWatched] = useState(function () {
     const storedValue = localStorage.getItem("watched");
     return JSON.parse(storedValue);
@@ -33,13 +32,6 @@ export default function App() {
    */
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
-  }
-
-  /**
-   * The function handleCloseMovie sets the selectedId variable to null.
-   */
-  function handleCloseMovie() {
-    setSelectedId(null);
   }
 
   /**
@@ -66,55 +58,6 @@ whenever it changes. */
       localStorage.setItem("watched", JSON.stringify(watched));
     },
     [watched]
-  );
-
-  /* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
-`useEffect` hook is used to fetch movies from the OMDB API based on the `query` state variable. */
-  useEffect(
-    function () {
-      const controller = new AbortController();
-
-      async function fetchMovies() {
-        try {
-          setIsLoading(true);
-          setError("");
-          const res = await fetch(
-            `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-            { signal: controller.signal }
-          );
-
-          if (!res.ok) throw new Error("Something went wrong");
-
-          const data = await res.json();
-
-          if (data.Response === "False") throw new Error("Movie not found 🤷‍♀️");
-
-          setMovies(data.Search);
-          setError("");
-        } catch (err) {
-          console.log(err.message);
-
-          if (err.name !== "AbortError") {
-            setError(err.message);
-          }
-        } finally {
-          setIsLoading(false);
-        }
-      }
-
-      if (query.length < 3) {
-        setMovies([]);
-        setError("");
-        return;
-      }
-      handleCloseMovie();
-      fetchMovies();
-
-      return function () {
-        controller.abort();
-      };
-    },
-    [query]
   );
 
   return (
