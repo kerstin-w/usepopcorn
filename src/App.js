@@ -1,11 +1,12 @@
+import { useState, useCallback } from "react";
 import { NavBar, Logo, Search, NumResults } from "./components/NavBar";
 import { Main, Box } from "./components/Main";
 import { WatchedSummary, WatchedMovieList } from "./components/WatchedMovies";
 import { MovieList, MovieDetails } from "./components/Movies";
 import Loader from "./components/Loader";
 import { ErrorMessage } from "./components/ErrorMessage";
-import { useEffect, useState, useCallback } from "react";
 import { useMovies } from "./components/useMovies";
+import { useLocalStorageState } from "./components/useLocalStorageState";
 
 export const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -20,11 +21,7 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
   const handleCloseMovie = useCallback(() => setSelectedId(null), []);
   const { movies, isLoading, error } = useMovies(query, handleCloseMovie);
-
-  const [watched, setWatched] = useState(function () {
-    const storedValue = localStorage.getItem("watched");
-    return JSON.parse(storedValue);
-  });
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   /**
    * The function `handleSelectMovie` updates the selected movie ID based on the current selected ID.
@@ -50,15 +47,6 @@ export default function App() {
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
-
-  /* The `useEffect` hook is used to store the `watched` state variable in the browser's local storage
-whenever it changes. */
-  useEffect(
-    function () {
-      localStorage.setItem("watched", JSON.stringify(watched));
-    },
-    [watched]
-  );
 
   return (
     <>
