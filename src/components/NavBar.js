@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useKey } from "./useKey";
 /**
  * The function exports a NavBar component that renders a navigation bar with a logo, search input, and
  * number of results.
@@ -40,20 +41,12 @@ export function Search({ query, setQuery }) {
 
   /* The `useEffect` hook in the code snippet is used to add an event listener to the document for the
 "keydown" event. */
-  useEffect(
-    function () {
-      function callback(e) {
-        if (document.activeElement === inputEl.current) return;
-        if (e.code === "Enter") {
-          inputEl.current.focus();
-          setQuery("");
-        }
-      }
-      document.addEventListener("keydown", callback);
-      return () => document.addEventListener("keydown", callback);
-    },
-    [setQuery]
-  );
+
+  useKey("Enter", function () {
+    if (document.activeElement === inputEl.current) return;
+    inputEl.current.focus();
+    setQuery("");
+  });
 
   return (
     <input
