@@ -27,21 +27,20 @@ export function Logo() {
 
 /**
  * The Search function is a React component that renders an input field for searching movies and
- * updates the query state based on user input.
- * @returns The Search function is returning an input element with the following properties:
+ * updates the query state when the input value changes.
+ * @returns The code is returning an input element with the following properties:
  * - className: "search"
  * - type: "text"
  * - placeholder: "Search movies..."
- * - value: the value of the query state variable
- * - onChange: a function that updates the query state variable with the value of the input field when
- * it changes.
+ * - value: the value of the `query` variable
+ * - onChange: a function that updates the `query` variable with the value of the input element
+ * - ref: a reference to the input element, assigned to the `inputEl`
  */
 export function Search({ query, setQuery }) {
   const inputEl = useRef(null);
 
   /* The `useEffect` hook in the code snippet is used to add an event listener to the document for the
 "keydown" event. */
-
   useKey("Enter", function () {
     if (document.activeElement === inputEl.current) return;
     inputEl.current.focus();

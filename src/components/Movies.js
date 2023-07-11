@@ -21,11 +21,13 @@ export function MovieList({ movies, onSelectMovie }) {
     </ul>
   );
 }
+
 /**
- * The Movie function renders a list item with an image, title, and year for a given movie.
- * @returns The Movie component is returning a list item element (<li>) that contains an image, a
- * heading, and a paragraph. The image source is set to the movie's poster URL, the heading displays
- * the movie's title, and the paragraph displays the movie's year.
+ * The Movie function is a React component that renders a movie item with its poster, title, and year.
+ * @returns The Movie component is returning a list item (li) element that displays information about a
+ * movie. It includes an image of the movie poster, the movie title, and the year the movie was
+ * released. The li element has a key attribute set to the imdbID of the movie, and an onClick event
+ * handler that calls the onSelectMovie function with the imdbID as an argument.
  */
 function Movie({ movie, onSelectMovie }) {
   return (
@@ -42,6 +44,16 @@ function Movie({ movie, onSelectMovie }) {
   );
 }
 
+/**
+ * The `MovieDetails` function is a React component that displays details of a selected movie,
+ * including its title, year, poster, runtime, IMDb rating, plot, release date, actors, and director,
+ * and allows the user to add the movie to a watched list and rate it.
+ * @returns The `MovieDetails` component returns a JSX element that represents the movie details. It
+ * includes a header section with a back button, movie poster, and movie details such as title, release
+ * date, runtime, genre, and IMDb rating. It also includes a section for user rating, where users can
+ * rate the movie using a star rating component and add it to their watched list. The section also
+ * displays the
+ */
 export function MovieDetails({
   selectedId,
   onCloseMovie,
@@ -51,16 +63,7 @@ export function MovieDetails({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
-
   const countRef = useRef(0);
-
-  useEffect(
-    function () {
-      if (userRating) countRef.current++;
-    },
-    [userRating]
-  );
-
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedId
@@ -79,6 +82,9 @@ export function MovieDetails({
     Genre: genre,
   } = movie;
 
+  /**
+   * The function `handleAdd` adds a new watched movie to a list of watched movies.
+   */
   function handleAdd() {
     const newWatchedMovie = {
       imdbID: selectedId,
@@ -94,8 +100,22 @@ export function MovieDetails({
     onCloseMovie();
   }
 
+  /* The `useEffect` hook in the code snippet is used to update the `countRef.current` value whenever the
+`userRating` state changes. */
+  useEffect(
+    function () {
+      if (userRating) countRef.current++;
+    },
+    [userRating]
+  );
+
+  /* The `useKey("Escape", onCloseMovie)` is a custom hook that listens for the "Escape" key press event
+and calls the `onCloseMovie` function when the "Escape" key is pressed. This hook is used to handle
+the functionality of closing the movie details when the "Escape" key is pressed. */
   useKey("Escape", onCloseMovie);
 
+  /* The `useEffect` hook in the code snippet is used to fetch movie details from the OMDB API when the
+`selectedId` prop changes. */
   useEffect(
     function () {
       async function getMovieDetails() {
@@ -112,6 +132,8 @@ export function MovieDetails({
     [selectedId]
   );
 
+  /* The `useEffect` hook in the code snippet is used to update the document title based on the selected
+movie's title. */
   useEffect(
     function () {
       if (!title) return;
